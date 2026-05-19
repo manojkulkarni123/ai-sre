@@ -1,0 +1,31 @@
+services:
+  target-app:
+    build: ./target-app
+    ports:
+      - 8080:8080
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/HighErrorRateAlert.yml:/etc/prometheus/HighErrorRateAlert.yml
+      - ./prometheus/HighLatencyAlert.yml:/etc/prometheus/HighLatencyAlert.yml
+      - ./prometheus/ServiceDownAlert.yml:/etc/prometheus/ServiceDownAlert.yml
+    depends_on:
+      - target-app
+  alertmanager:
+    image: prom/alertmanager
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    depends_on:
+      - prometheus
+  # agent:
+  #   build: ./agent
+  #   ports:
+  #     - 8000:8000
+  #   depends_on:
+  #     - alertmanager
