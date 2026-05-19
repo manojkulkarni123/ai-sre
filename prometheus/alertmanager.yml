@@ -1,0 +1,15 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['severity']      
+  group_wait: 10s             
+  group_interval: 30s         
+  repeat_interval: 5m          
+  receiver: 'AI-SRE'    
+
+receivers:
+  - name: 'AI-SRE'
+    webhook_configs:
+      - url: 'http://agent:8000/webhook/alert'
+        send_resolved: true   

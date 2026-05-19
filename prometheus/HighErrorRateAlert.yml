@@ -1,0 +1,11 @@
+groups:
+  - name: target-app
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[2m]) / rate(http_requests_total[2m]) > 0.1
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Error rates climbing up"
+          description: "error rates clmbing up gradually"

@@ -1,0 +1,11 @@
+groups:
+  - name: target-app
+    rules:
+      - alert: ServiceDown
+        expr: up{job="target-app"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "When the container is down"
+          description: "the container is not reachable"
