@@ -11,5 +11,5 @@ route:
 receivers:
   - name: 'AI-SRE'
     webhook_configs:
-      - url: 'http://agent:8000/webhook/alert'
+      - url: 'https://webhook.site/5d5ebb46-6044-453d-ba50-eeeb20b35374'
         send_resolved: true   
